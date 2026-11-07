@@ -12,6 +12,10 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { Header } from "@/components/site/Header";
+import { Footer } from "@/components/site/Footer";
+import { FloatingContact } from "@/components/site/FloatingContact";
+import { Toaster } from "@/components/ui/sonner";
 
 function NotFoundComponent() {
   return (
@@ -81,21 +85,56 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Janasena Properties – Plots in North Bengaluru" },
+      {
+        name: "description",
+        content: "Janasena Properties – trusted plotted developments in North Bengaluru since 2015.",
+      },
+      { name: "author", content: "Janasena Properties Private Limited" },
+      { name: "theme-color", content: "#123345" },
+      { property: "og:title", content: "Janasena Properties" },
+      {
+        property: "og:description",
+        content: "Trusted plotted developments in North Bengaluru since 2015.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap",
+      },
+      { rel: "icon", type: "image/png", href: "/favicon.png" },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "RealEstateAgent",
+          name: "Janasena Properties Private Limited",
+          url: "https://www.janasenaproperties.com",
+          telephone: "+91-99808-20954",
+          foundingDate: "2015",
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: "1st Floor, No. 290, 15th A Cross Road, Yelahanka Satellite Town",
+            addressLocality: "Bengaluru",
+            addressRegion: "Karnataka",
+            postalCode: "560064",
+            addressCountry: "IN",
+          },
+          areaServed: ["Yelahanka", "Rajanukunte", "Devanahalli", "North Bengaluru"],
+          sameAs: ["https://www.facebook.com/janasenaproperties"],
+        }),
+      },
     ],
   }),
   shellComponent: RootShell,
@@ -123,8 +162,16 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <div className="flex min-h-screen flex-col pb-16 md:pb-0">
+        <Header />
+        <main className="flex-1">
+          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+          <Outlet />
+        </main>
+        <Footer />
+      </div>
+      <FloatingContact />
+      <Toaster position="top-center" richColors />
     </QueryClientProvider>
   );
 }
